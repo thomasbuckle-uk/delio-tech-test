@@ -9,7 +9,7 @@ use App\Finnhub\src\Hydrator\ShareAPIHydratorInterface;
 use Generator;
 use Traversable;
 
-final class ShareAPIService
+ class ShareAPIService
 {
 
     private SharesDriverInterface $driver;
@@ -26,14 +26,16 @@ final class ShareAPIService
      * @param array<SymbolEnum> $symbolParams
 
      */
-    public function fetchQuotes(array $symbolParams = null): Generator
+    public function fetchQuotes(array $symbolParams = null): array
     {
+        $results = [];
         foreach ($symbolParams as $symbol) {
             $share = $this->driver->fetchShares($symbol);
 
-            yield $this->hydrator->hydrate($symbol, $share);
+            $results[] = $this->hydrator->hydrate($symbol, $share);
         }
 
+        return $results;
 
     }
 }

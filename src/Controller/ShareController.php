@@ -5,8 +5,7 @@ namespace App\Controller;
 use App\Finnhub\src\Enum\SymbolEnum;
 use App\Finnhub\src\Service\Factory\ShareAPIServiceFactory;
 use App\Finnhub\src\Service\ShareAPIService;
-use App\Statistics\Service\QuoteDtoService;
-use MongoDB\BSON\Symbol;
+use App\Statistics\QuoteDtoService;
 use OpenApi\Annotations as OA;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,8 +49,7 @@ final class ShareController extends AbstractController
 
         $results = $this->apiService->fetchQuotes($fetchParams);
 
-        foreach($results as $quoteTo)
-        {
+        foreach ($results as $quoteTo) {
             $this->quoteDtoService->insertQuote($quoteTo);
         }
         //Then save to Database;

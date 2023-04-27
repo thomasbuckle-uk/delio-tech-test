@@ -35,11 +35,12 @@ class Quote
     #[ORM\Column]
     private ?float $previousClosePrice = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $time = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateTime = null;
 
     #[ORM\Column(length: 255)]
     private ?string $shareName = null;
+
 
     public function getId(): ?int
     {
@@ -130,14 +131,14 @@ class Quote
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    public function getDateTime(): ?\DateTimeInterface
     {
-        return $this->time;
+        return $this->dateTime;
     }
 
-    public function setTime(\DateTimeInterface $time): self
+    public function setDateTime(\DateTimeInterface $dateTime): self
     {
-        $this->time = $time;
+        $this->dateTime = $dateTime;
 
         return $this;
     }
@@ -153,4 +154,5 @@ class Quote
 
         return $this;
     }
+
 }

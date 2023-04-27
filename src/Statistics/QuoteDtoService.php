@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Statistics\Service;
+namespace App\Statistics;
 
 use App\Entity\Quote;
 use App\Finnhub\src\Dto\QuoteTo;
@@ -25,7 +25,7 @@ class QuoteDtoService
     {
         $quote = new Quote();
         $quote->setShareName($quoteTo->getName());
-        $quote->setTime($quoteTo->getTime());
+        $quote->setDateTime($quoteTo->getTime());
         $quote->setChange($quoteTo->getD());
         $quote->setCurrentPrice($quoteTo->getC());
         $quote->setHighPriceOfDay($quoteTo->getH());

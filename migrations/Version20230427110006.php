@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230427083509 extends AbstractMigration
+final class Version20230427110006 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,7 @@ final class Version20230427083509 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE quote_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE quote (id INT NOT NULL, current_price DOUBLE PRECISION NOT NULL, change DOUBLE PRECISION NOT NULL, percent_change DOUBLE PRECISION NOT NULL, high_price_of_day DOUBLE PRECISION NOT NULL, low_price_of_day DOUBLE PRECISION NOT NULL, open_price_of_day DOUBLE PRECISION NOT NULL, previous_close_price DOUBLE PRECISION NOT NULL, time TIME(0) WITHOUT TIME ZONE NOT NULL, share_name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE quote (id INT NOT NULL, current_price DOUBLE PRECISION NOT NULL, change DOUBLE PRECISION NOT NULL, percent_change DOUBLE PRECISION NOT NULL, high_price_of_day DOUBLE PRECISION NOT NULL, low_price_of_day DOUBLE PRECISION NOT NULL, open_price_of_day DOUBLE PRECISION NOT NULL, previous_close_price DOUBLE PRECISION NOT NULL, date_time TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, share_name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema): void
