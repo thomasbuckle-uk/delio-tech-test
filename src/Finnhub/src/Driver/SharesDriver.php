@@ -2,7 +2,10 @@
 
 namespace App\Finnhub\src\Driver;
 
+use App\Finnhub\src\Enum\SymbolEnum;
 use Finnhub\Api\DefaultApi;
+use Finnhub\ApiException;
+use Finnhub\Model\Quote;
 use Traversable;
 
 final class SharesDriver implements SharesDriverInterface
@@ -16,9 +19,12 @@ final class SharesDriver implements SharesDriverInterface
     }
 
 
-    public function fetchShares(): Traversable
+    /**
+     * @throws ApiException
+     */
+    public function fetchShares(string $symbol): Quote
     {
-        // TODO: Implement fetchShares() method.
+        return $this->client->quote($symbol);
     }
 
     public function setCache()

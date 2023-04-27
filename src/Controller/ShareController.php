@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Finnhub\src\Enum\SymbolEnum;
+use App\Finnhub\src\Service\Factory\ShareAPIServiceFactory;
+use App\Finnhub\src\Service\ShareAPIService;
+use App\Statistics\Service\QuoteDtoService;
+use MongoDB\BSON\Symbol;
 use OpenApi\Annotations as OA;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,11 +19,15 @@ use Symfony\Component\Routing\Annotation\Route;
 final class ShareController extends AbstractController
 {
     private LoggerInterface $logger;
+    private ShareAPIService $apiService;
+    private QuoteDtoService $quoteDtoService;
 
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, string $finnhubApiKey, QuoteDtoService $quoteDtoService)
     {
         $this->logger = $logger;
+        $this->apiService = (new ShareAPIServiceFactory($finnhubApiKey))->create();
+        $this->quoteDtoService = $quoteDtoService;
     }
 
     #[Route('/retrieve-latest', methods: ['POST'])]
@@ -31,9 +41,22 @@ final class ShareController extends AbstractController
      * )
      * */
 
-    public function finnhubDataRetrieve(): Response
+    public function finnhubDataRetrieve(Request $request): Response
     {
-        return $this->json('placeholder', 200);
+        $fetchParams = array(
+            SymbolEnum::APPLE,
+            SymbolEnum::MICROSOFT
+        );
+
+        $results = $this->apiService->fetchQuotes($fetchParams);
+
+        foreach($results as $quoteTo)
+        {
+            $this->quoteDtoService->insertQuote($quoteTo);
+        }
+        //Then save to Database;
+
+        return $this->json('Succcess', 200);
     }
 
 

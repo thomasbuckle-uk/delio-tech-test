@@ -11,9 +11,19 @@ use http\Env;
 
 final class FinnhubClientFactory
 {
-    public static function create(): DefaultApi
+
+ private string $finnhubApiKey ;
+    public function __construct(string $finnhubApiKey)
+
     {
-        $config = Configuration::getDefaultConfiguration()->setApiKey('token', getenv('FINNHUB_API_KEY'));
+        $this->finnhubApiKey = $finnhubApiKey;
+    }
+
+    public function create(): DefaultApi
+    {
+
+
+        $config = Configuration::getDefaultConfiguration()->setApiKey('token', $this->finnhubApiKey);
         return new DefaultApi(
             new Client(),
             $config

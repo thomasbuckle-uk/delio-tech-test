@@ -38,6 +38,9 @@ class Quote
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $time = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $shareName = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Quote
     public function setTime(\DateTimeInterface $time): self
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    public function getShareName(): ?string
+    {
+        return $this->shareName;
+    }
+
+    public function setShareName(string $shareName): self
+    {
+        $this->shareName = $shareName;
 
         return $this;
     }
